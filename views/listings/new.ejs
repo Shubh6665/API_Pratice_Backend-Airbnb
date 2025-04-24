@@ -7,15 +7,18 @@ aur phir create kre using post req jo us template k data ko save krega-->
             <div class="col-8 offset-2">
                 <br />
                 <h1>New Listing:</h1>
-        <form method="POST" action="/listings">
+        <form method="POST" action="/listings" novalidate class="needs-validation"> 
             <div class="mb-3">  
                 <label for="title" class="form-label">Title:</label>
             <input type="text" id="title" name="listing[title]" class ="form-control" required>
+            <div class="valid-feedback">Looks Good! ✅</div>
+            <div class="invalid-feedback">Please provide a valid title ❌</div>
             </div>
             
             <div class="mb-3">
                 <label for="description" class="form-label">Description:</label>
             <textarea id="description" name="listing[description]" class ="form-control" required></textarea>
+            <div class="invalid-feedback">Please provide a valid description ❌</div>
             </div>
 
             <div class="mb-3">
@@ -27,20 +30,21 @@ aur phir create kre using post req jo us template k data ko save krega-->
             <div class="mb-3 col-md-6">
                 <label for="price" class="form-label">Price:</label>
             <input type="number" id="price" name="listing[price]" class ="form-control" required>
+            <div class="invalid-feedback">Please provide a valid Price ❌</div>
             </div>
 
             <div class="mb-3 col-md-6">
                 <label for="country" class="form-label">Country:</label>
             <input type="text" id="country" name="listing[country]" class ="form-control" required>
+            <div class="invalid-feedback">Please provide a valid Country Name ❌</div>
             </div>
         </div>
             
             <div class="mb-3">
                 <label for="location" class="form-label">Location:</label>
             <input type="text" id="location" name="listing[location]" class ="form-control" required>
+            <div class="invalid-feedback">Please provide a valid Location ❌</div>
             </div>
-            
-            
             
             <br><br>
             <button class="btn btn-dark add-btn mt-3">Add</button>
