@@ -1,0 +1,63 @@
+    <!--Step 6 create an ejs template for showing each list by id to
+    phle app.js me route set kro aur render kro then yha pr unke template create kro-->
+    <% layout ("/layouts/boilerplate") %>
+    <div class="row mt-3">
+        <div class="col-8 offset-3">
+            <h3>Listing Detail: </h3>
+        </div>
+            <div class="card col-6 offset-3">
+                <img src="<%= listingid.image %>" class="card-img-top show-img" alt="listing image">
+                <div class="card-body">
+                    <p class="card-text"><b><%= listingid.title %></b>, <%= listingid.country %><br>
+                        &#8377; <%= listingid.price.toLocaleString("en-IN") %> per night<br>
+                        <%= listingid.description %><br>
+                        <%= listingid.location %>
+                    </p>
+                    <div class="btns mt-3">
+                        <form method="GET" action="/listings/<%= listingid._id %>/edit" >
+                            <button class="btn btn-dark edit-btns">Edit</button>
+                        </form>
+            
+                        <form method="POST" action="/listings/<%= listingid._id %>?_method=DELETE">
+                            <button class="btn btn-dark delete-btns offset-3">Delete</button>
+                        </form>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+
+        <!-- <ul>
+                <li> <%= listingid.title %></li>
+                <li><%= listingid.description %> </li>
+                <li> &#8377; <%= listingid.price.toLocaleString("en-IN") %> per night</li>  -->    <!--yha pr hmne toLocaleString("en-IN") 2,000 aise comma k satth format me likhne liye--> 
+          <!--  <li> <%= listingid.country %></li>
+                <li> <%= listingid.location %></li>
+            </ul>
+            <br>
+       -->
+            <!--Step 8 
+            to edit first make form and add button to it which send get method and action  on speci. route and 
+            for this define route in app.js -->
+            <!-- <form method="GET" action="/listings/<%= listingid._id %>/edit">
+                <button>Edit</button>
+            </form>
+            -->
+
+
+            <!-- other way for the above same is to use anchor tag 
+            <a href="/listings/<%= listingid._id %>/edit">Edit</a> 
+            -->
+
+
+            <!--Step 9-->
+            <!-- <br>
+            <form method="POST" action="/listings/<%= listingid._id %>?_method=DELETE">
+                <button>Delete</button>
+            </form>
+            -->
+
+        <br >
+        
+    </div>
