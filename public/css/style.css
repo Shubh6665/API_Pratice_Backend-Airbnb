@@ -150,16 +150,22 @@ body{
 }
 
 .card-img-top:hover {
-    opacity: 0.7; /* Slightly dim the image */
-    background-color: rgba(245, 245, 245, 0.3); /* Light smoke effect */
-    transition: all 0.1s ease-in-out; /* Smooth transition */
+    opacity: 0.7; 
+    background-color: rgba(245, 245, 245, 0.3); 
+    transition: all 0.1s ease-in-out; 
 }
 
 .card-img-overlay:hover {
-    opacity: 0.7; /* Slightly dim the overlay */
-    background-color: rgba(255, 255, 255, 0.4); /* Light smoke effect */
-    transition: all 0.1s ease-in-out; /* Smooth transition */
+    opacity: 0.7; 
+    background-color: rgba(255, 255, 255, 0.4); 
+    transition: all 0.1s ease-in-out;
 }
+
+input[type="range"]::-webkit-slider-thumb {
+    background: #0d6efd; 
+}
+
+
 
 /*Show Page*/
 
@@ -190,17 +196,17 @@ body{
 /* Wishlist Icon Styling */
 .wishlist {
     position: absolute;
-    top: 10px; /* Adjust the vertical position */
-    right: 10px; /* Adjust the horizontal position */
-    padding: 5px; /* Add some padding inside the circle */
-    z-index: 10; /* Ensure it appears above the image */
-    cursor: pointer; /* Change cursor to pointer */
+    top: 10px; 
+    right: 10px;
+    padding: 5px; 
+    z-index: 10; 
+    cursor: pointer; 
 }
 
 .wishlist i {
-    color: rgba(148, 145, 145, 0.53); /* Heart icon color */
-    font-size: 1.4rem; /* Adjust icon size */
-    -webkit-text-stroke: 1px white; /* Add a white stroke around the heart */
+    color: rgba(148, 145, 145, 0.53); 
+    font-size: 1.4rem; 
+    -webkit-text-stroke: 1px white; 
     
 }
 
@@ -210,6 +216,7 @@ body{
     transition: all 0.1s upease-in-out;
     -webkit-text-stroke: 0px;
 }
+
 /* Responsive Behavior */
 @media (max-width: 768px) {
     #navbarNav {
@@ -236,4 +243,21 @@ body{
         display: none;
     }
     
+}
+
+.btn, .add-btn, .edit-btn, .delete-btns {
+    border-radius: 2rem !important;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: background 0.2s, color 0.2s;
+}
+.btn-outline-dark {
+    border: 2px solid #222 !important;
+    color: #222 !important;
+    background: #fff !important;
+}
+.btn-outline-dark:hover {
+    background: #fe424d !important;
+    color: #fff !important;
+    border-color: #fe424d !important;
 }

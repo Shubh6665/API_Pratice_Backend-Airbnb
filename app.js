@@ -7,6 +7,9 @@ const methodOverride = require("method-override")
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/Expresserror"); 
+const Review = require("./models/reviews");
+const {listingSchema} = require("./schema.js");
+
 
 main()
 .then(()=>{
@@ -26,6 +29,17 @@ app.use(express.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.engine("ejs" ,ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
+
+const validateListing=(req,res,next)=>{
+    let {error}=listingSchema.validate(req.body);
+    if(error){
+        let msg=error.details.map((el)=>el.message).join(",");
+        throw new ExpressError(400,msg);
+    }
+    else{
+        next();
+    }
+}
 
 app.get("/",(req,res)=>{
     res.send("Hi, I am Root");
@@ -55,13 +69,15 @@ app.get("/listings/:id",wrapAsync(async(req,res)=>{
 }));
 
 //Crete Route(Step 7 ii)
-app.post("/listings",wrapAsync(async(req,res,next)=>{
+app.post("/listings",validateListing,wrapAsync(async(req,res,next)=>{
     // 1st way -> let {title,description,image,price,location,country}=req.body;
     // 2nd way -> let listing=req.body.listing;  new Listing(listing);
     // optimized of 2nd way
-    if(!req.body.listing){
-        throw new ExpressError(400,"Send Valid Lisiting Data");
-    } 
+
+    // if(!req.body.listing){
+    //     throw new ExpressError(400,"Send Valid Lisiting Data");
+    // } 
+
     const newListing=new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
@@ -76,21 +92,31 @@ app.get("/listings/:id/edit",wrapAsync(async(req,res)=>{
 
 
 //Update Route (Step 8 ii)
-app.put("/listings/:id", wrapAsync(async(req,res)=>{
-    if(!req.body.listing){
-        throw new ExpressError(400,"Send Valid Lisiting Data");
-    } 
+app.put("/listings/:id", validateListing,wrapAsync(async(req,res)=>{
     let {id}=req.params;
     await Listing.findByIdAndUpdate(id,{...req.body.listing});
     res.redirect(`/listings/${id}`);
 }));
 
+//Delete Route (Step 9)
 app.delete("/listings/:id" ,wrapAsync(async(req,res)=>{
     let {id}=req.params;
     const deletedList=await Listing.findByIdAndDelete(id);
     console.log(deletedList);
     res.redirect("/listings");
 }));
+
+//Reviews POST Route
+app.post("/listings/:id/reviews",async(req,res)=>{
+    let listing = await Listing.findById(req.params.id);
+    let newReview = new Review(req.body.review);
+
+    listing.reviews.push(newReview);
+    await newReview.save();
+    await listing.save();
+
+    res.redirect(`/listings/${listing._id}`);
+});
 
 // TestingSample Listing
 
@@ -109,14 +135,15 @@ app.delete("/listings/:id" ,wrapAsync(async(req,res)=>{
 //     res.send("Testing Successful");
 // })
 
+// Error Handling Middleware
 app.all("*",(req,res,next)=>{
     next(new ExpressError(404, "Page Not Found!")); 
 })
 
 app.use((err,req,res,next)=>{
     let {statusCode=500 , message="Something Went Wrong!"}=err;
-    res.status(statusCode).send(message );
-     
+    //res.status(statusCode).send(message );
+     res.status(statusCode).render("error.ejs",{err});
 })
 
 app.listen(8080,()=>{
