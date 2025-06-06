@@ -8,7 +8,7 @@ const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/Expresserror"); 
 const Review = require("./models/reviews");
-const {listingSchema} = require("./schema.js");
+const {listingSchema , reviewSchema } = require("./schema.js");
 
 
 main()
@@ -30,6 +30,7 @@ app.use(methodOverride("_method"));
 app.engine("ejs" ,ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
+//Server Side Validation for Listing(JOI)
 const validateListing=(req,res,next)=>{
     let {error}=listingSchema.validate(req.body);
     if(error){
@@ -37,6 +38,16 @@ const validateListing=(req,res,next)=>{
         throw new ExpressError(400,msg);
     }
     else{
+        next();
+    }
+}
+//Server Side Validation for Reviews(JOI)
+const validateReview=(req,res,next)=>{
+    let {error}=reviewSchema.validate(req.body);
+    if(error){
+        let msg = error.details.map((el)=>el.message).join(",");
+        throw new ExpressError(400,msg);
+    }else{
         next();
     }
 }
@@ -64,7 +75,7 @@ app.get("/listings/new",(req,res)=>{
 //Show Route(Step 6)
 app.get("/listings/:id",wrapAsync(async(req,res)=>{
     let {id}=req.params;
-    const listingid=await Listing.findById(id);
+    const listingid=await Listing.findById(id).populate("reviews");
     res.render("./listings/show.ejs",{listingid});
 }));
 
@@ -107,7 +118,7 @@ app.delete("/listings/:id" ,wrapAsync(async(req,res)=>{
 }));
 
 //Reviews POST Route
-app.post("/listings/:id/reviews",async(req,res)=>{
+app.post("/listings/:id/reviews",validateReview, wrapAsync(async(req,res)=>{
     let listing = await Listing.findById(req.params.id);
     let newReview = new Review(req.body.review);
 
@@ -116,7 +127,16 @@ app.post("/listings/:id/reviews",async(req,res)=>{
     await listing.save();
 
     res.redirect(`/listings/${listing._id}`);
-});
+})); 
+
+
+//Reviews DELETE Route
+app.delete("/listings/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
+    let {id,reviewId}=req.params;
+    await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});//$Pull Oper. Kisi array field se value ko remove karta hai (agar match kare).
+    await Review.findOneAndDelete(reviewId);
+    res.redirect(`/listings/${id}`);
+}))
 
 // TestingSample Listing
 
