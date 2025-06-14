@@ -1,7 +1,7 @@
 //Step 2 Create a Schema for the dbs
 
 const mongoose = require("mongoose");
-const Review = require("./review");
+const Review = require("./reviews");
 const Schema= mongoose.Schema;
 
 const listingSchema= new Schema ({
