@@ -12,8 +12,15 @@ const ExpressError = require("./utils/Expresserror");
 const session = require("express-session");
 const flash = require("connect-flash");
 
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/review.js");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
+
+
+const listingRouter = require("./routes/listing.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
+
 
 
 main()
@@ -50,6 +57,14 @@ const sessionOptions={
 app.use(session(sessionOptions));
 app.use(flash());
 
+//Passport Configuration after session option as for different tab user will be logged in
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req,res,next)=>{
     res.locals.success=req.flash("success");
     res.locals.error=req.flash("error");
@@ -83,11 +98,22 @@ app.get("/",(req,res)=>{
     res.send("Hi, I am Root");
 })
 
-app.use("/listings", listings); 
-app.use("/listings/:id/reviews",reviews);//yha se id params sirf app.js me rh ja rha review.js router me nhi j rha
+//Fake User Registration Route
+// app.use("/demouser",async(req,res)=>{
+//     let fakeUser = new User({
+//         email:"student@gmail.com",
+//         username:"student"
+//     })
+// 
+//     let registeredUser = await User.register(fakeUser,"password123");
+//     res.send(registeredUser);
+// })
 
+
+app.use("/listings", listingRouter); 
+app.use("/listings/:id/reviews",reviewRouter);//yha se id params sirf app.js me rh ja rha review.js router me nhi j rha
  //Parent route me jo params hai unko child route se merge krna hai to
- 
+app.use("/",userRouter); 
 
 
 
