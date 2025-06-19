@@ -1,23 +1,20 @@
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-    <div class="container-fluid">
-      <!-- Brand Logo -->
-      <a class="navbar-brand d-flex align-items-center" href="/listings">
-        <i class="fa-brands fa-airbnb me-2"></i> 
-        <span>airbnb</span>
-      </a>
+  <div class="container-fluid navbarcont">
+    <!-- Brand Logo -->
+    <a class="navbar-brand d-flex align-items-center" href="/listings">
+      <i class="fa-brands fa-airbnb me-2"></i>
+      <span>airbnb</span>
+    </a>
 
-      <!-- Hamburger Button -->
-      <button class="navbar-toggler" type="button" 
-        data-bs-toggle="collapse" 
-        data-bs-target="#navbarNav" 
-        aria-controls="navbarNav" 
-        aria-expanded="false" 
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <!-- Hamburger Button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <!-- Collapsible Navbar -->
-      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+    <!-- Collapsible Navbar -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="justify-content-center w-100" id="section1">
         <ul class="navbar-nav custom-navbar">
           <li class="nav-item item">
             <a class="nav-link" href="/">Home</a>
@@ -30,8 +27,23 @@
           <li class="nav-item item">
             <a class="nav-link" href="/listings/new">Add New Listing</a>
           </li>
-          
         </ul>
       </div>
+      <div id="section2">
+        <li class="nav-item dropdown w-100 justify-content-center" >
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Profile
+          </a>
+          <ul class="dropdown-menu custom-navbar">
+            <% if(!currUser) { %>
+              <li><a class="dropdown-item" href="/login">Login</a></li>
+              <li><a class="dropdown-item" href="/signup">SignUp</a></li>
+            <% } else { %>
+              <li><a class="dropdown-item" href="/logout">LogOut</a></li>
+            <% } %>
+          </ul>
+        </li>
+      </div>
     </div>
+  </div>
 </nav>
