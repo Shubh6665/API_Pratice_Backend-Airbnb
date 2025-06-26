@@ -19,6 +19,15 @@ async function main() {
   
 const initDB=async()=>{
     await Listing.deleteMany({});
+
+    initData.data = initData.data.map((obj)=>({
+        ...obj, owner:"684fed7a72b41d09af4a578e"
+    }));
+    //obj: Represents each object in the array during iteration.
+    //...obj: Copies all properties of the object into a new object.
+    //.map(): Creates a new array by transforming each object.
+    //Purpose: Add the owner property to each listing without modifying the original array.
+
     await Listing.insertMany(initData.data);//yaha pr hm data.js 
     // se jo object k form me data:sampleListing export kiye hai 
     // usko yaha pr hm initData.data se uss key ko access kr rhe h
