@@ -16,6 +16,7 @@
                                 <%= listingid.location %><br>
                               <b>Owner:</b><i> <%= listingid.owner.username %></i>
                 </p>
+                <% if(currUser && currUser._id.equals(listingid.owner._id)){ %>
                 <div class="btns mt-3">
                     <form method="GET" action="/listings/<%= listingid._id %>/edit">
                         <button class="btn btn-dark edit-btns">Edit</button>
@@ -25,6 +26,7 @@
                         <button class="btn btn-dark delete-btns offset-3">Delete</button>
                     </form>
                 </div>
+                <% } %>
             </div>
         </div>
         <div class="col-8 offset-3 mb-3">
