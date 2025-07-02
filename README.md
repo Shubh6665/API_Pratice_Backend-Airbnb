@@ -13,6 +13,12 @@ This is a **backend-focused mini project** inspired by Airbnb, crafted to solidi
 - **Form validation**
 - **MongoDB integration with Mongoose**
 - **Error handling mechanisms**
+- **User authentication & authorization** ✅
+- **Flash messaging for user feedback**
+- **Session management**
+- **Review system with ownership checks**
+- **Bootstrap-powered responsive UI**
+- **Clean code practices and modular structure**
 
 ---
 
@@ -24,6 +30,9 @@ This is a **backend-focused mini project** inspired by Airbnb, crafted to solidi
 - **Mongoose** – ODM for MongoDB
 - **EJS** – Templating engine
 - **HTML/CSS** – Frontend structure and styling
+- **Bootstrap** – Responsive design
+- **Passport.js** – Authentication
+- **connect-flash** – Flash messages
 - **Git & GitHub** – Version control and collaboration
 
 ---
@@ -31,14 +40,18 @@ This is a **backend-focused mini project** inspired by Airbnb, crafted to solidi
 ## 📁 Project Structure
 ```bash
 API_Pratice_Backend-Airbnb/
- ├── models/ # Mongoose schemas
- ├── public/ # Static assets (CSS, images)
- │ └── css/
- ├── views/ # EJS templates
- ├── app.js # Main application file
- ├── package.json # Project metadata and dependencies
- └── README.md # Project documentation
-
+ ├── models/           # Mongoose schemas
+ ├── public/           # Static assets (CSS, images)
+ │   └── css/
+ ├── views/            # EJS templates
+ ├── routes/           # Express route handlers
+ ├── middleware.js     # Custom middleware (auth, validation, etc.)
+ ├── utils/            # Utility functions and error classes
+ ├── app.js            # Main application file
+ ├── package.json      # Project metadata and dependencies
+ ├── README.md         # Project documentation
+ └── docs/
+     └── AUTH_README.md # Authentication & Authorization Guide
 ```
 
 ---
@@ -52,6 +65,10 @@ Through this project, I have:
 - Designed and validated forms using **EJS templates**
 - Handled errors gracefully to enhance user experience
 - Structured a project following best practices
+- Implemented **user authentication and authorization** using Passport.js
+- Used **locals** to pass user data to templates
+- Populated referenced fields (like author) to display usernames
+- Ensured only owners can edit/delete their listings or reviews
 
 ---
 
@@ -63,11 +80,17 @@ Through this project, I have:
 
 ## 🔮 Future Enhancements
 
-- Implement **user authentication** (e.g., JWT)
+- Implement **JWT-based authentication**
 - Redesign with a **modern**, **responsive UI**
 - Add **CRUD operations** for listings
 - Integrate **search and filter** functionalities
 - Deploy the application on platforms like **Heroku** or **Vercel**
+
+---
+
+## 📚 Documentation
+
+- [Authentication & Authorization Guide](docs/AUTH_README.md)
 
 ---
 
