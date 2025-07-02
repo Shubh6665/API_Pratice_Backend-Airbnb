@@ -16,7 +16,7 @@
                                 <%= listingid.location %><br>
                               <b>Owner:</b><i> <%= listingid.owner.username %></i>
                 </p>
-         <!--   <% if(currUser && currUser._id.equals(listingid.owner._id)){ %>  -->
+             <% if(currUser && currUser._id.equals(listingid.owner._id)){ %>
                 <div class="btns mt-3">
                     <form method="GET" action="/listings/<%= listingid._id %>/edit">
                         <button class="btn btn-dark edit-btns">Edit</button>
@@ -26,10 +26,13 @@
                         <button class="btn btn-dark delete-btns offset-3">Delete</button>
                     </form>
                 </div>
-         <!--   <% } %>  -->    
+            <% } %>      
             </div>
         </div>
+
+        
         <div class="col-8 offset-3 mb-3">
+            <% if(currUser){ %>
             <hr>
             <h4>Leave a Review:</h4>
             <form action="/listings/<%= listingid._id %>/reviews" method="POST" novalidate class="needs-validation">
@@ -49,14 +52,14 @@
 
                 <button class="btn btn-outline-dark">Submit</button>
             </form>
-
+            <% } %>
             <hr />
             <h4>All Reviews</h4>
             <div class="row">
                 <% for(review of listingid.reviews) {%>
                     <div class="card col-5 ms-3 mb-3">
                         <div class="card-body mt-2 mb-2">
-                            <h5 class="card-title">John Doe</h5>
+                            <h5 class="card-title"><%= review.author.username %></h5>
                             <p class="card-text">
                                 <%= review.comment %>
                             </p>

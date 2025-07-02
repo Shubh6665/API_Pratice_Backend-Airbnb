@@ -4,7 +4,7 @@ const wrapAsync = require("../utils/wrapAsync.js");
 
 const Review = require("../models/reviews.js");
 const Listing = require("../models/listing.js"); 
-const {validateReview} = require("../middleware.js");
+const {validateReview,isLoggedIn,isReviewAuthor} = require("../middleware.js");
 
 
 
@@ -12,10 +12,10 @@ const {validateReview} = require("../middleware.js");
 
 
 //Reviews POST Route
-router.post("/",validateReview, wrapAsync(async(req,res)=>{
+router.post("/", isLoggedIn, validateReview, wrapAsync(async(req,res)=>{
     let listing = await Listing.findById(req.params.id);
     let newReview = new Review(req.body.review);
-
+    newReview.author = req.user._id; //req.user is set by the isLoggedIn middleware
     listing.reviews.push(newReview);
     await newReview.save();
     await listing.save();
@@ -25,7 +25,7 @@ router.post("/",validateReview, wrapAsync(async(req,res)=>{
 
 
 //Reviews DELETE Route
-router.delete("/:reviewId",wrapAsync(async(req,res)=>{
+router.delete("/:reviewId",isLoggedIn,isReviewAuthor, wrapAsync(async(req,res)=>{
     let {id,reviewId}=req.params;
     await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});//$Pull Oper. Kisi array field se value ko remove karta hai (agar match kare).
     await Review.findOneAndDelete(reviewId);
