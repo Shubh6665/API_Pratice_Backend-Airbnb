@@ -13,6 +13,7 @@ This document summarizes all authentication and authorization logic, learnings, 
 - [Clean Code Guidelines](#clean-code-guidelines)
 - [Common Pitfalls & Debugging](#common-pitfalls--debugging)
 - [Checklist for Future Projects](#checklist-for-future-projects)
+- [📝 Step-by-Step: Adding Authentication & Authorization](#-step-by-step-adding-authentication--authorization)
 
 ---
 
