@@ -113,7 +113,7 @@ app.get("/",(req,res)=>{
 
 app.use("/listings", listingRouter); 
 app.use("/listings/:id/reviews",reviewRouter);//yha se id params sirf app.js me rh ja rha review.js router me nhi j rha
- //Parent route me jo params hai unko child route se merge krna hai to
+ //Parent route me jo params hai unko child route se merge krna hai to merge params review file me true krdo import me
 app.use("/",userRouter); 
 
 
