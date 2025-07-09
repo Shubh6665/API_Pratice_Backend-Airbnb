@@ -3,7 +3,8 @@ const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 const listingController = require("../controller/listing.js");
-
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 router.route("/")
     .get(wrapAsync(listingController.index)) //index route

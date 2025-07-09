@@ -7,7 +7,7 @@ aur phir create kre using post req jo us template k data ko save krega-->
             <div class="col-8 offset-2">
                 <br />
                 <h1>New Listing:</h1>
-        <form method="POST" action="/listings" novalidate class="needs-validation"> 
+        <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data"> 
             <div class="mb-3">  
                 <label for="title" class="form-label">Title:</label>
             <input type="text" id="title" name="listing[title]" class ="form-control" required>
@@ -22,8 +22,8 @@ aur phir create kre using post req jo us template k data ko save krega-->
             </div>
 
             <div class="mb-3">
-                <label for="image" class="form-label">Image:</label>
-            <input type="text" id="image" name="listing[image]" class ="form-control" >
+                <label for="image" class="form-label">Upload Image:</label>
+            <input type="file" id="image" name="listing[image]" class ="form-control" >
             </div>
             
         <div class="row">
