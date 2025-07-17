@@ -11,10 +11,8 @@ const listingSchema= new Schema ({
     },     
     description: String,
     image:{
-        type: String,
-        default: "https://t4.ftcdn.net/jpg/05/81/84/71/360_F_581847176_eF540XqFGHDdGPZxyh5NtWHNzgs0XFk6.jpg",
-        set:(v) => v==="" ? "https://t4.ftcdn.net/jpg/05/81/84/71/360_F_581847176_eF540XqFGHDdGPZxyh5NtWHNzgs0XFk6.jpg" : v ,
-        //For the image used but empty , to show we use set :(v) => v === "" ? "link" : v
+        url:String,
+        filename:String,
     },
     price:Number,
     location: String,
